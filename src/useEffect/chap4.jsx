@@ -4,6 +4,10 @@ import axios from "axios";
 const Chap4 = () => {
   const [count, setCount] = useState(0);
   const [items, setItems] = useState([])
+  const [inputValue, setInputValue] = useState("react");
+
+  // クエリパラメータ
+  const [query, setQuery] = useState(inputValue);
   const [isLoading, setIsLoading] = useState(false);
 
   React.useEffect(() => {
@@ -26,10 +30,22 @@ const Chap4 = () => {
     };
 
     fetchData();
-  }, []);
+  }, [query]);
 
   return (
     <>
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        setQuery(inputValue);
+      }}
+      >
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(event) => setInputValue(event.target.value)}
+        />
+        <button type='submit'>検索</button>
+      </form>
       {isLoading ? (
         <p>Loading</p>
       ) : (
